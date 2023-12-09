@@ -17,3 +17,5 @@ MIRO: https://miro.com/app/board/uXjVNGj7Ckg=/
 Trello: https://trello.com/b/MhYvsezN/задачи
 
 Discord: https://discord.gg/YmbTmwyZ
+
+Telegram: https://t.me/+o582ifJXlHViNWYy
