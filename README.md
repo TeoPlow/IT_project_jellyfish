@@ -11,3 +11,7 @@ https://github.com/painwheelgit | @vector_protector | Анастасия | - |
 https://github.com/bogjazzz1 | @its_life_yeah | Богдан | - |
 https://github.com/xp0ssx | @DenisVoit | Денис | - |
 https://github.com/VOZZYBOY | @dasosaker | Эрик | - |
+
+MIRO: https://miro.com/app/board/uXjVNGj7Ckg=/
+Trello: https://trello.com/b/MhYvsezN/задачи
+Discord: https://discord.gg/YmbTmwyZ
