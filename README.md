@@ -14,7 +14,7 @@ https://github.com/VOZZYBOY | @dasosaker | Эрик | Тестировщик |
 
 MIRO: https://miro.com/app/board/uXjVNGj7Ckg=/
 
-Trello: https://trello.com/b/MhYvsezN/задачи
+Trello: https://trello.com/b/vOBv7KlT/задачи
 
 Discord: https://discord.gg/YmbTmwyZ
 
