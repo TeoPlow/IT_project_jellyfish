@@ -1,18 +1,19 @@
 def replace_characters(file_path, character_a, character_b):
     try:
-        # Открываем файл и считываем его содержимое
         with open(file_path, 'r', encoding='utf-8') as file:
             text = file.read()
 
-        # Разбиваем текст на кластеры
+        # Вычисляем длину строки и вычитаем её из 4000
+        max_cluster_length = 4000 - len(f"Замени в тексте ниже персонажа {character_a} на персонажа {character_b}.\n\n")
+
         clusters = []
         cluster_number = 1
         while len(text) > 0:
-            if len(text) <= 4000:
-                cluster_text = text[:4000]
-                text = text[4000:]
+            if len(text) <= max_cluster_length:
+                cluster_text = text[:max_cluster_length]
+                text = text[max_cluster_length:]
             else:
-                last_period_index = text[:4000].rfind('.')  # Находим последнюю точку перед 4000 символами
+                last_period_index = text[:max_cluster_length].rfind('.')
                 cluster_text = text[:last_period_index+1]
                 text = text[last_period_index+1:]
 
@@ -27,13 +28,9 @@ def replace_characters(file_path, character_a, character_b):
     except FileNotFoundError:
         return ["Указанный файл не найден."]
 
-# Запрос пути к файлу и данных для замены
 request = r"D:\sisisi\text.txt A B"
-
-# Разбиваем введенную строку на компоненты
 file_path, character_a, character_b = map(str.strip, request.split())
 
-# Применяем функцию замены и выводим результат
 results = replace_characters(file_path, character_a, character_b)
 for result in results:
     print(result)
