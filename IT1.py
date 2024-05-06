@@ -2,6 +2,12 @@ import requests
 import json
 from IPython.display import display, Markdown
 
+file_path = "C:\\Programs\\GitHub_Repositories\\IT_project_jellyfish\\DataSets\\По щучьему веленью.txt"
+character_a = "Баба-Яга"
+character_b = "Лёва"
+token = "eyJjdHkiOiJqd3QiLCJlbmMiOiJBMjU2Q0JDLUhTNTEyIiwiYWxnIjoiUlNBLU9BRVAtMjU2In0.Np0rNwWMIwRPdNtoMKikeisxk_X8eEWui_KQtK0nvHzth2sDBROtcBkleNgP3AYW88maG1Oemhh7ebreFs5a2cnfl89LnLgAWxWDQDvmzDeZ-eb3fDyiNftwhiCQG2Ey5pUlDkLOMZYbgOYAjwEOaiSOa8YY-z8aaBTaHnx3TkDoZZuoXSVNemOA0gTh9-mMW32gyvrd5gGyDYC4N_ZNybaQPM_yC8F9Pq84UAEYPZ5SxbybHBTd9TUlZe2aYFSXBEkB5io3JsSyOXr2qRmnn2ZFr-LTJ6ncrk5nSxD65oNxpuhsBett-44SvPOd00zz5rZ5d5kDLLNoM8YlddzJwA.AYgVV0MX-Nz100oJZtcBMA.IQbXvybBwGuAh_X-YrSEs9zbNnqBTqDUAw5vuktRSVlUTY3CPreInmXMMwRsc753X-zfuln0Xn7xHlZs3UB4EwXdOHxirPb7SUulzCfU51zbuYqespyfebg7N_qpSrZ9dQ2VPgW0-36H6AOxmYdUyRLG3yzsvtxNgw7OXI_UcLkMu0lQBUcFD-yEZAZq0VNLbC-cMSTLD_Tw7ry1NwXNf5pK4WqcQ9ORPGC8w1CNoE5Yup05ufmLIsaxlpiHn1M95yxHymsqoLY3D94rb138qxiw8ugRypsI1cdMvnvaQsPk5ipx5EVqOQbVG65RK9S4srOS0OO0qIOKLe4uJ-xS6hu20DgRfd6wGJOi8UM-SAH3aW2_-L5YgiUh33j1Vc2hUFeWNqTMDAbx4epfiFkyr4JlPde1Si4ztdxUR3a5WzPqeKXW11zWpMyERornmYzILNo7z8T7q_LWQImqdlfyWd8e2eJAe_W2WgOwa1KPQyNlpZruISxweW6t-Wr3iQJLky1GQA0bHgGI8HRStjlpJKXkUGhGWQnju4FWwoLIkOgZfGuxONgOTWEgOPGB3daT-4TSopKL5OIxfGRHiZ4nGlB_8otZxGvWk0VIf85F8h4Io0jvzlXU-CfkWXJdLxRQ-nOJtSn5kXcg34Tm_Uyjtyjz3_3BgutyEl5kPpLPjZ33dvIkmcJepCEEzK70_h_tGkz91qZZwpTPD6Xr9-HO8YG9JtaHrSCSbURAoPfnDEA.eeYjnnsvsARzFmXpQGJjjbSWnh1ouZBL81HJl6v1uK8"
+cluster_length = 4000
+
 def get_chat_completion(auth_token, user_message):
     """
     Отправляет POST-запрос к API чата для получения ответа от модели GigaChat.
@@ -55,8 +61,8 @@ def replace_characters(file_path, character_a, character_b):
         with open(file_path, 'r', encoding='utf-8') as file:
             text = file.read()
 
-        # Вычисляем длину строки и вычитаем её из 4000
-        max_cluster_length = 4000 - len(f"Замени в тексте ниже персонажа {character_a} на персонажа {character_b}.\n\n")
+        # Вычисляем длину строки и вычитаем её из cluster_length
+        max_cluster_length = cluster_length - len(f"Замени в тексте ниже персонажа {character_a} на персонажа {character_b}.\n\n")
 
         clusters = []
         cluster_number = 1
@@ -80,12 +86,9 @@ def replace_characters(file_path, character_a, character_b):
     except FileNotFoundError:
         return ["Указанный файл не найден."]
 
-request = r"D:\sisisi\text.txt A B"
-file_path, character_a, character_b = map(str.strip, request.split())
-
 results = replace_characters(file_path, character_a, character_b)
 for result in results:
-    giga_token="Тут должен быть токен"
+    giga_token = token
     answer = get_chat_completion(giga_token, result)
      
     answer.json()
@@ -93,3 +96,6 @@ for result in results:
     print(answer.json()['choices'][0]['message']['content'])
      
     display(Markdown(answer.json()['choices'][0]['message']['content']))
+
+# def print_to_txt ():
+#     # создаёте функцию для вывода текста в файл
