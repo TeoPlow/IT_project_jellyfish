@@ -1,12 +1,61 @@
+client_id = "747b8b77-661d-4bdd-b2be-8eb06c36badf"
+secret = "93ce3aba-1f29-4783-bc22-d32838260a13"
+auth = "NzQ3YjhiNzctNjYxZC00YmRkLWIyYmUtOGViMDZjMzZiYWRmOjkzY2UzYWJhLTFmMjktNDc4My1iYzIyLWQzMjgzODI2MGExMw=="
+
+
 import requests
 import json
 from IPython.display import display, Markdown
+import uuid
 
-file_path = "C:\\Programs\\GitHub_Repositories\\IT_project_jellyfish\\DataSets\\По щучьему веленью.txt"
+output_file_path = "D:/sisisi/text2.txt"
+file_path = "D:/sisisi/text.txt"
 character_a = "Баба-Яга"
 character_b = "Лёва"
-token = "eyJjdHkiOiJqd3QiLCJlbmMiOiJBMjU2Q0JDLUhTNTEyIiwiYWxnIjoiUlNBLU9BRVAtMjU2In0.Np0rNwWMIwRPdNtoMKikeisxk_X8eEWui_KQtK0nvHzth2sDBROtcBkleNgP3AYW88maG1Oemhh7ebreFs5a2cnfl89LnLgAWxWDQDvmzDeZ-eb3fDyiNftwhiCQG2Ey5pUlDkLOMZYbgOYAjwEOaiSOa8YY-z8aaBTaHnx3TkDoZZuoXSVNemOA0gTh9-mMW32gyvrd5gGyDYC4N_ZNybaQPM_yC8F9Pq84UAEYPZ5SxbybHBTd9TUlZe2aYFSXBEkB5io3JsSyOXr2qRmnn2ZFr-LTJ6ncrk5nSxD65oNxpuhsBett-44SvPOd00zz5rZ5d5kDLLNoM8YlddzJwA.AYgVV0MX-Nz100oJZtcBMA.IQbXvybBwGuAh_X-YrSEs9zbNnqBTqDUAw5vuktRSVlUTY3CPreInmXMMwRsc753X-zfuln0Xn7xHlZs3UB4EwXdOHxirPb7SUulzCfU51zbuYqespyfebg7N_qpSrZ9dQ2VPgW0-36H6AOxmYdUyRLG3yzsvtxNgw7OXI_UcLkMu0lQBUcFD-yEZAZq0VNLbC-cMSTLD_Tw7ry1NwXNf5pK4WqcQ9ORPGC8w1CNoE5Yup05ufmLIsaxlpiHn1M95yxHymsqoLY3D94rb138qxiw8ugRypsI1cdMvnvaQsPk5ipx5EVqOQbVG65RK9S4srOS0OO0qIOKLe4uJ-xS6hu20DgRfd6wGJOi8UM-SAH3aW2_-L5YgiUh33j1Vc2hUFeWNqTMDAbx4epfiFkyr4JlPde1Si4ztdxUR3a5WzPqeKXW11zWpMyERornmYzILNo7z8T7q_LWQImqdlfyWd8e2eJAe_W2WgOwa1KPQyNlpZruISxweW6t-Wr3iQJLky1GQA0bHgGI8HRStjlpJKXkUGhGWQnju4FWwoLIkOgZfGuxONgOTWEgOPGB3daT-4TSopKL5OIxfGRHiZ4nGlB_8otZxGvWk0VIf85F8h4Io0jvzlXU-CfkWXJdLxRQ-nOJtSn5kXcg34Tm_Uyjtyjz3_3BgutyEl5kPpLPjZ33dvIkmcJepCEEzK70_h_tGkz91qZZwpTPD6Xr9-HO8YG9JtaHrSCSbURAoPfnDEA.eeYjnnsvsARzFmXpQGJjjbSWnh1ouZBL81HJl6v1uK8"
 cluster_length = 4000
+
+def get_token(auth_token, scope='GIGACHAT_API_PERS'):
+    """
+    Выполняет POST-запрос к эндпоинту, который выдает токен.
+
+    Параметры:
+    - auth_token (str): токен авторизации, необходимый для запроса.
+    - область (str): область действия запроса API. По умолчанию — «GIGACHAT_API_PERS».
+
+    Возвращает:
+    - ответ API, где токен и срок его "годности".
+    """
+    # Создадим идентификатор UUID (36 знаков)
+    rq_uid = str(uuid.uuid4())
+
+    # API URL
+    url = "https://ngw.devices.sberbank.ru:9443/api/v2/oauth"
+
+    # Заголовки
+    headers = {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept': 'application/json',
+        'RqUID': rq_uid,
+        'Authorization': f'Basic {auth_token}'
+    }
+
+    # Тело запроса
+    payload = {
+        'scope': scope
+    }
+
+    try:
+        # Делаем POST запрос с отключенной SSL верификацией
+        # (можно скачать сертификаты Минцифры, тогда отключать проверку не надо)
+        response = requests.post(url, headers=headers, data=payload, verify=False)
+        return response
+    except requests.RequestException as e:
+        print(f"Ошибка: {str(e)}")
+        return -1
+    
+response = get_token(auth)
+if response != -1:
+  token = response.json()['access_token']
 
 def get_chat_completion(auth_token, user_message):
     """
@@ -31,7 +80,7 @@ def get_chat_completion(auth_token, user_message):
                 "content": user_message  # Содержание сообщения
             }
         ],
-        "temperature": 2,  # Температура генерации
+        "temperature": 1,  # Температура генерации
         "top_p": 0.1,  # Параметр top_p для контроля разнообразия ответов
         "n": 1,  # Количество возвращаемых ответов
         "stream": False,  # Потоковая ли передача ответов
@@ -86,16 +135,16 @@ def replace_characters(file_path, character_a, character_b):
     except FileNotFoundError:
         return ["Указанный файл не найден."]
 
-results = replace_characters(file_path, character_a, character_b)
-for result in results:
-    giga_token = token
-    answer = get_chat_completion(giga_token, result)
-     
-    answer.json()
-
-    print(answer.json()['choices'][0]['message']['content'])
-     
-    display(Markdown(answer.json()['choices'][0]['message']['content']))
-
-# def print_to_txt ():
-#     # создаёте функцию для вывода текста в файл
+with open(output_file_path, 'w', encoding='utf-8') as output_file:
+    results = replace_characters(file_path, character_a, character_b)
+    for result in results:
+        answer = get_chat_completion(token, result)
+        
+        output_text = answer.json()['choices'][0]['message']['content']
+        
+        # Записываем вывод программы в файл
+        output_file.write(output_text + "\n")
+        
+        print(output_text)
+        
+        display(Markdown(output_text))
