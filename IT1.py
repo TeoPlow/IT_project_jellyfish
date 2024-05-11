@@ -139,7 +139,7 @@ def replace_characters(file_path, character_a, character_b):
     except FileNotFoundError:
         return ["Указанный файл не найден."]
 
-phrases_to_exclude = ["Кластер 1", "Кластер 2", "Кластер 3", "Кластер 4", "Кластер 5", "Кластер 6", "Кластер 7", "Кластер 8", "Кластер 9", "Кластер 10", "Кластер 11", "Кластер 12", "Кластер 13", "Кластер 14" ]
+phrases_to_exclude = [r"Кластер \d"]
 
 with open(output_file_path, 'w', encoding='utf-8') as output_file:
     results = replace_characters(file_path, character_a, character_b)
