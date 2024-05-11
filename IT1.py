@@ -2,13 +2,15 @@ client_id = "747b8b77-661d-4bdd-b2be-8eb06c36badf"
 secret = "93ce3aba-1f29-4783-bc22-d32838260a13"
 auth = "NzQ3YjhiNzctNjYxZC00YmRkLWIyYmUtOGViMDZjMzZiYWRmOjkzY2UzYWJhLTFmMjktNDc4My1iYzIyLWQzMjgzODI2MGExMw=="
 
-
+import os
 import requests
 import json
 from IPython.display import display, Markdown
 import uuid
 
-output_file_path = "D:/sisisi/text2.txt"
+output_directory = "D:/sisisi"
+output_file_name = "output_file.txt"
+output_file_path = os.path.join(output_directory, output_file_name)
 file_path = "D:/sisisi/text.txt"
 character_a = "Баба-Яга"
 character_b = "Лёва"
@@ -80,7 +82,7 @@ def get_chat_completion(auth_token, user_message):
                 "content": user_message  # Содержание сообщения
             }
         ],
-        "temperature": 1,  # Температура генерации
+        "temperature": 3,  # Температура генерации
         "top_p": 0.1,  # Параметр top_p для контроля разнообразия ответов
         "n": 1,  # Количество возвращаемых ответов
         "stream": False,  # Потоковая ли передача ответов
@@ -134,6 +136,8 @@ def replace_characters(file_path, character_a, character_b):
 
     except FileNotFoundError:
         return ["Указанный файл не найден."]
+
+phrases_to_exclude = ["Кластер 1", "Кластер 2", "Кластер 3", "Кластер 4", "Кластер 5", "Кластер 6", "Кластер 7", "Кластер 8", "Кластер 9", "Кластер 10", "Кластер 11", "Кластер 12", "Кластер 13", "Кластер 14" ]
 
 with open(output_file_path, 'w', encoding='utf-8') as output_file:
     results = replace_characters(file_path, character_a, character_b)
