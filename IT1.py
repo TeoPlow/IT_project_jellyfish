@@ -11,7 +11,9 @@ import uuid
 output_directory = "D:/sisisi"
 output_file_name = "output_file.txt"
 output_file_path = os.path.join(output_directory, output_file_name)
-file_path = "D:/sisisi/text.txt"
+file_directory = "D:/sisisi"
+file_name = "test.txt"
+file_path = os.path.join(file_directory, file_name)
 character_a = "Баба-Яга"
 character_b = "Лёва"
 cluster_length = 4000
