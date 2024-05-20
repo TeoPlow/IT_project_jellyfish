@@ -7,6 +7,7 @@ import requests
 import json
 from IPython.display import display, Markdown
 import uuid
+import re
 
 output_directory = "D:/sisisi"
 output_file_name = "output_file.txt"
@@ -148,8 +149,15 @@ with open(output_file_path, 'w', encoding='utf-8') as output_file:
         
         output_text = answer.json()['choices'][0]['message']['content']
         
-        # Записываем вывод программы в файл
-        output_file.write(output_text + "\n")
+        # Фильтруем вывод программы
+        output_text = re.sub(r'Кластер \d+:', '', output_text)
+        
+        # Удаляем лишние пробелы в начале и конце строки
+        output_text = output_text.strip()
+        
+        # Записываем отфильтрованный вывод программы в файл
+        if output_text:  # Проверяем, что строка не пустая
+            output_file.write(output_text + "\n")
         
         print(output_text)
         
